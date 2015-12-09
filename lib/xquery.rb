@@ -4,3 +4,4 @@ module XQuery
 end
 
 require 'xquery/version'
+require 'xquery/generic'

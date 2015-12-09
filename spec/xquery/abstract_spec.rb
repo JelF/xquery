@@ -3,7 +3,7 @@ require 'xquery/abstract'
 class Implementation < XQuery::Abstract
   wrap_method :foo
   wrap_method :bar, as: :baz
-  wrap_method :change_superclass!
+  wrap_methods :change_superclass!
 
   self.query_superclass = RSpec::Mocks::Double
 

@@ -22,24 +22,20 @@ module XQuery
     # @param name [#to_sym] name of method on query
     # @param as [#to_sym] name of method defined
     def self.wrap_method(name, as: name)
-      define_method(as) do |*args, &block|
-        self.query = query.public_send(name, *args, &block)
-        validate!
-        self
-      end
-
+      define_method(as) { |*args, &block| _update_query(name, *args, &block) }
       alias_method("__#{as}", as)
       private("__#{as}")
-      define_proxy(as)
-    end
 
-    # defines method on q
-    # @param name [#to_sym] name of binding
-    def self.define_proxy(name)
-      query_proxy.send(:define_method, name) do |*_args, &_block|
-        instance.send("__#{name}")
+      query_proxy.send(:define_method, as) do |*_args, &_block|
+        instance.send("__#{as}")
         self
       end
+    end
+
+    # same as wrap_method, but hanldes multiply methods
+    # @param methods [Array(#to_sym)] names of methods defined
+    def self.wrap_methods(*methods)
+      methods.each(&method(:wrap_method))
     end
 
     # @return [Class] query_proxy (`q`) class
@@ -58,14 +54,22 @@ module XQuery
 
     private
 
+    attr_writer :query
+
+    # @private_api
+    # updates query by calling method on it and storing the result
+    def _update_query(method, *args, &block)
+      self.query = query.public_send(method, *args, &block)
+      validate!
+      self
+    end
+
     # checks constraints
     # @raise XQuery::QuerySuperclassChanged
     def validate!
       return true if query.is_a?(query_superclass)
       fail QuerySuperclassChanged.new(query, query_superclass)
     end
-
-    attr_writer :query
 
     # @return [XQuery::QueryProxy] object could be used
     #   to access method wrappers unchanged

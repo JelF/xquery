@@ -2,3 +2,8 @@ Style/Documentation:
   Exclude:
     - lib/*/version.rb
     - spec/**/*.rb
+
+Style/MethodName:
+   Exclude:
+     # XQuery method should be CamelCase
+     - lib/xquery/generic.rb

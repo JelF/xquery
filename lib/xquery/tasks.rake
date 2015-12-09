@@ -2,9 +2,8 @@ ROOT = Pathname.new(__FILE__).join('../../..')
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
-  t.files = Dir[ROOT.join('lib/**/*.rb')] # optional
-  # t.options = ['--any', '--extra', '--opts'] # optional
-  # t.stats_options = ['--list-undoc']         # optional
+  t.files = Dir[ROOT.join('lib/**/*.rb')]
+  t.options = %w(--private)
 end
 
 namespace :doc do
