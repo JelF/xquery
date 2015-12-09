@@ -1,0 +1,4 @@
+Style/Documentation:
+  Exclude:
+    - lib/*/version.rb
+    - spec/**/*.rb

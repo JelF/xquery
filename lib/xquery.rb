@@ -1,6 +1,6 @@
 require 'active_support'
 
-module XQuerry
+module XQuery
 end
 
 require 'xquery/version'
