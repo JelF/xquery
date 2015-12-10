@@ -5,7 +5,7 @@ class Implementation < XQuery::Abstract
   wrap_method :bar, as: :baz
   wrap_methods :change_superclass!
 
-  self.query_superclass = RSpec::Mocks::Double
+  self.query_superclass = [RSpec::Mocks::Double, Class]
 
   def sequence
     foo
@@ -62,7 +62,7 @@ describe XQuery::Abstract do
   end
 
   specify '#validation' do
-    message = 'Expected nil to be an instance of RSpec::Mocks::Double'
+    message = 'Expected nil to be an instance of [RSpec::Mocks::Double, Class]'
 
     Implementation.with(model) do |q|
       expect { q.change_superclass! }
@@ -77,7 +77,7 @@ describe XQuery::Abstract do
     expect(implementation.query).to eq(result)
   end
 
-specify '.alias_on_q' do
+  specify '.alias_on_q' do
     implementation = Inherited.new(model)
     expect(implementation.q.sequence).to eq(result)
   end

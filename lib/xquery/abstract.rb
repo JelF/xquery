@@ -6,7 +6,7 @@ require 'xquery/errors'
 module XQuery
   # abstract superclass, should be inherited, not used
   class Abstract
-    class_attribute :query_superclass
+    class_attribute :query_superclass, :allow_nesting
 
     # yields instance inside block. I suggest to name it `q`
     # @param args [Array(Object)] array of arguments would be passed to
@@ -77,9 +77,14 @@ module XQuery
     end
 
     # checks constraints
+    # @param query_superclass [Class | Array(Class)]
+    #   explictly set superclass for validation
     # @raise XQuery::QuerySuperclassChanged
     def validate!
-      return true if query.is_a?(query_superclass)
+      qs = query_superclass
+      qs = qs.is_a?(Array) ? qs : [qs]
+      return true if qs.any? { |c| query.is_a?(c) }
+
       fail QuerySuperclassChanged.new(query, query_superclass)
     end
 
