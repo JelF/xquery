@@ -67,7 +67,7 @@ module XQuery
     # yields query inside block
     # @param block [#to_proc]
     # @return [XQuery::Abstract] self
-    def merge(&block)
+    def apply(&block)
       self.query = block.call(query)
       validate!
       self
@@ -81,7 +81,7 @@ module XQuery
     # updates query by calling method on it and storing the result
     # @return [XQuery::Abstract] self
     def _update_query(method, *args, &block)
-      merge { |x| x.public_send(method, *args, &block) }
+      apply { |x| x.public_send(method, *args, &block) }
     end
 
     # checks constraints

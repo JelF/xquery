@@ -77,10 +77,10 @@ describe XQuery::Abstract do
     expect(implementation.query).to eq(result)
   end
 
-  specify '#merge' do
+  specify '#apply' do
     r = Implementation.with(model) do |q|
-      q.merge(&:foo)
-      q.merge(&:bar)
+      q.apply(&:foo)
+      q.apply(&:bar)
     end
 
     expect(r).to eq(result)

@@ -1,4 +1,4 @@
 module XQuery
   # defines XQuery version
-  VERSION = '0.0.1f'
+  VERSION = '0.0.2a'
 end
