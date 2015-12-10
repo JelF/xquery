@@ -13,6 +13,8 @@ class Implementation < XQuery::Abstract
     query
   end
 
+  alias_on_q :sequence
+
   # make it public
   def q
     super
@@ -73,5 +75,10 @@ describe XQuery::Abstract do
     q = implementation.q
     q.foo.bar
     expect(implementation.query).to eq(result)
+  end
+
+specify '.alias_on_q' do
+    implementation = Inherited.new(model)
+    expect(implementation.q.sequence).to eq(result)
   end
 end
