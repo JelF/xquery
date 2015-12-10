@@ -49,6 +49,11 @@ module XQuery
       @query_proxy ||= Class.new(QueryProxy)
     end
 
+    # inherited classes should also have their query_proxies inherited
+    def self.inherited(child)
+      child.instance_variable_set(:@query_proxy, Class.new(query_proxy))
+    end
+
     # contains current state of wrapped query
     attr_reader :query
 

@@ -19,8 +19,11 @@ class Implementation < XQuery::Abstract
   end
 end
 
+class Inherited < Implementation
+  wrap_method :bar
+end
+
 describe XQuery::Abstract do
-  subject(:implementation) { Implementation.new(model) }
   let(:result) { double(:result) }
 
   let(:model) do
@@ -50,6 +53,7 @@ describe XQuery::Abstract do
   end
 
   specify 'using q' do
+    implementation = Implementation.new(model)
     q = implementation.q
     q.foo.baz
     expect(implementation.query).to eq(result)
@@ -62,5 +66,12 @@ describe XQuery::Abstract do
       expect { q.change_superclass! }
         .to raise_error(XQuery::QuerySuperclassChanged, message)
     end
+  end
+
+  specify '#inheritance' do
+    implementation = Inherited.new(model)
+    q = implementation.q
+    q.foo.bar
+    expect(implementation.query).to eq(result)
   end
 end
