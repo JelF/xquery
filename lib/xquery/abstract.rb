@@ -73,13 +73,10 @@ module XQuery
     # @return [XQuery::Abstract] self
     def apply(&block)
       self.query = block.call(query)
-      validate!
       self
     end
 
     private
-
-    attr_writer :query
 
     # @private_api
     # updates query by calling method on it and storing the result
@@ -88,11 +85,14 @@ module XQuery
       apply { |x| x.public_send(method, *args, &block) }
     end
 
-    # checks constraints
+    # added constraints check
     # @raise XQuery::QuerySuperclassChanged
-    def validate!
-      return true if query.is_a?(query_superclass)
-      fail QuerySuperclassChanged.new(query, query_superclass)
+    def query=(x)
+      unless x.is_a?(query_superclass)
+        fail QuerySuperclassChanged.new(query, query_superclass)
+      end
+
+      @query = x
     end
 
     # @return [XQuery::QueryProxy] object could be used
