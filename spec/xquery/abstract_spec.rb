@@ -70,14 +70,23 @@ describe XQuery::Abstract do
     end
   end
 
-  specify '#inheritance' do
+  specify 'inheritance' do
     implementation = Inherited.new(model)
     q = implementation.q
     q.foo.bar
     expect(implementation.query).to eq(result)
   end
 
-specify '.alias_on_q' do
+  specify '#merge' do
+    r = Implementation.with(model) do |q|
+      q.merge(&:foo)
+      q.merge(&:bar)
+    end
+
+    expect(r).to eq(result)
+  end
+
+  specify '.alias_on_q' do
     implementation = Inherited.new(model)
     expect(implementation.q.sequence).to eq(result)
   end

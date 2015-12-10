@@ -64,16 +64,24 @@ module XQuery
       @query_proxy = self.class.query_proxy.new(self)
     end
 
+    # yields query inside block
+    # @param block [#to_proc]
+    # @return [XQuery::Abstract] self
+    def merge(&block)
+      self.query = block.call(query)
+      validate!
+      self
+    end
+
     private
 
     attr_writer :query
 
     # @private_api
     # updates query by calling method on it and storing the result
+    # @return [XQuery::Abstract] self
     def _update_query(method, *args, &block)
-      self.query = query.public_send(method, *args, &block)
-      validate!
-      self
+      merge { |x| x.public_send(method, *args, &block) }
     end
 
     # checks constraints
