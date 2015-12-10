@@ -9,10 +9,10 @@ module XQuery
     class_attribute :query_superclass
 
     # yields instance inside block. I suggest to name it `q`
-    # @param query [Object] generic query
+    # @param args [Array(Object)] array of arguments would be passed to
     # @param block [#to_proc] block to witch instance would be yielded
-    def self.with(query, &block)
-      instance = new(query)
+    def self.with(*args, &block)
+      instance = new(*args)
       block.call(instance)
       instance.query
     end
