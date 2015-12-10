@@ -89,7 +89,7 @@ module XQuery
     # @raise XQuery::QuerySuperclassChanged
     def query=(x)
       unless x.is_a?(query_superclass)
-        fail QuerySuperclassChanged.new(query, query_superclass)
+        fail QuerySuperclassChanged.new(x, query_superclass)
       end
 
       @query = x
