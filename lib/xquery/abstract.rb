@@ -23,11 +23,17 @@ module XQuery
     # @param as [#to_sym] name of method defined
     def self.wrap_method(name, as: name)
       define_method(as) { |*args, &block| _update_query(name, *args, &block) }
-      alias_method("__#{as}", as)
-      private("__#{as}")
+      alias_on_q(as)
+    end
 
-      query_proxy.send(:define_method, as) do |*_args, &_block|
-        instance.send("__#{as}")
+    # Aliases method to __method and q.method
+    # @param name [#to_sym] name of method
+    def self.alias_on_q(name)
+      alias_method("__#{name}", name)
+      private("__#{name}")
+
+      query_proxy.send(:define_method, name) do |*args, &block|
+        instance.send("__#{name}", *args, &block)
         self
       end
     end
