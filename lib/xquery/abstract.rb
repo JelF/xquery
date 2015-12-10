@@ -26,6 +26,12 @@ module XQuery
       alias_on_q(as, true)
     end
 
+    # same as wrap_method, but hanldes multiply methods
+    # @param methods [Array(#to_sym)] names of methods defined
+    def self.wrap_methods(*methods)
+      methods.each(&method(:wrap_method))
+    end
+
     # Aliases method to __method and q.method
     # @param name [#to_sym] name of method
     # @param return_self [Boolean] should defined method return self or result
@@ -37,12 +43,6 @@ module XQuery
         result = instance.send("__#{name}", *args, &block)
         return_self ? self : result
       end
-    end
-
-    # same as wrap_method, but hanldes multiply methods
-    # @param methods [Array(#to_sym)] names of methods defined
-    def self.wrap_methods(*methods)
-      methods.each(&method(:wrap_method))
     end
 
     # @return [Class] query_proxy (`q`) class
