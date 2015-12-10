@@ -17,6 +17,10 @@ module XQuery
       instance.query
     end
 
+    class << self
+      alias_method :execute, :with
+    end
+
     # Defines `method`, `__method` and `q.method`.
     # Both of wich changes query to query.method
     # @param name [#to_sym] name of method on query
