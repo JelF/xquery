@@ -1,7 +1,7 @@
 language: ruby
 rvm:
-  - 2.3.0-dev
+  - ruby-2.3.0-preview1
   - 2.2.3
   - 2.1.7
   - 2.0.0-p647
-  - jruby-1.7.22
+  - jruby-9.0.4.0
