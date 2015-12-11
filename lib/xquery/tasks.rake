@@ -6,6 +6,14 @@ YARD::Rake::YardocTask.new do |t|
   t.options = %w(--private)
 end
 
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+task default: %i(rubocop spec)
+
 namespace :doc do
   doc_root = ROOT.join('doc')
 
@@ -15,7 +23,7 @@ namespace :doc do
   end
 
   desc 'open doc'
-  task open: 'yard' do
+  task open: :yard do
     require 'uri'
     exec 'xdg-open', URI.join('file:///', doc_root.join('index.html').to_s).to_s
   end
