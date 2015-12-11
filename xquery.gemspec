@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.description = File.read(File.expand_path('../README.md', __FILE__))
   spec.email = %W(begdory4+#{spec.name}@gmail.com)
 
-  spec.files = Dir["#{__FILE__}/../lib"]
+  spec.files = Dir[File.expand_path('../lib/**/*.rb', __FILE__)]
   spec.require_paths = %w(lib)
 
   spec.add_runtime_dependency 'activesupport', '~> 4.0'
