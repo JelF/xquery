@@ -21,7 +21,11 @@ namespace :spec do
 
   desc 'sets up simplecov'
   task :simplecov do
-    ENV['COVERAGE_ROOT'] = coverage_root.to_s
+    if RUBY_PLATFORM == 'java'
+      puts 'simplecov fails with jruby and will not run'
+    else
+      ENV['COVERAGE_ROOT'] = coverage_root.to_s
+    end
   end
 
   desc 'runs spec with coverage and opens result'
