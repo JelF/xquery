@@ -12,7 +12,31 @@ RuboCop::RakeTask.new
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task default: %i(rubocop spec)
+task default: %i(rubocop spec:coverage spec)
+
+namespace :spec do
+  coverage_root = ROOT.join('spec/coverage')
+  desc "writes simplecov coverage in #{coverage_root}"
+  task coverage: %i(simplecov spec)
+
+  desc 'sets up simplecov'
+  task :simplecov do
+    ENV['COVERAGE_ROOT'] = coverage_root.to_s
+  end
+
+  desc 'runs spec with coverage and opens result'
+  task :show_coverage do
+    begin
+      Rake::Task['spec:coverage'].execute
+    rescue 'SystemExit'
+      puts 'specs failed or coverage too low!'
+    end
+
+    require 'uri'
+    exec 'xdg-open',
+         URI.join('file:///', coverage_root.join('index.html').to_s).to_s
+  end
+end
 
 namespace :doc do
   doc_root = ROOT.join('doc')

@@ -20,4 +20,12 @@ describe XQuery::Generic do
 
     expect(r).to be_nil
   end
+
+  specify 'q object' do
+    r = described_class.new('all i wanna do is take your money')
+    q = r.send(:q)
+    q << '12345'
+    q[0...-1]
+    expect(r.query).to eq('all i wanna do is take your money1234')
+  end
 end
