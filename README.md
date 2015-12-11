@@ -1,6 +1,7 @@
 # XQuery
 XQuery is designed to replace boring method call chains and allow to easier
 convert it in a builder classes
+[![Build Status](https://travis-ci.org/JelF/xquery.svg?branch=master)](https://travis-ci.org/JelF/xquery)
 ## Usage of `XQuery` function
 `Xquery` is a shortcat to `Xquery::Generic.with`
 
