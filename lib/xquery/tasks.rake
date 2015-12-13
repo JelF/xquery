@@ -53,6 +53,7 @@ namespace :doc do
   desc 'open doc'
   task open: :yard do
     require 'uri'
-    exec 'xdg-open', URI.join('file:///', doc_root.join('index.html').to_s).to_s
+    exec 'xdg-open',
+         URI.join('file:///', doc_root.join('frames.html').to_s).to_s
   end
 end

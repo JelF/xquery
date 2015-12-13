@@ -27,6 +27,7 @@ end
 
 describe XQuery::Abstract do
   let(:result) { double(:result) }
+  subject { Implementation.new(model) }
 
   let(:model) do
     model = double(:first, foo: double(:second, bar: result))
@@ -55,10 +56,9 @@ describe XQuery::Abstract do
   end
 
   specify 'using q' do
-    implementation = Implementation.new(model)
-    q = implementation.q
+    q = subject.q
     q.foo.baz
-    expect(implementation.query).to eq(result)
+    expect(subject.query).to eq(result)
   end
 
   specify '#validation' do
@@ -89,5 +89,14 @@ describe XQuery::Abstract do
   specify '.alias_on_q' do
     implementation = Inherited.new(model)
     expect(implementation.q.sequence).to eq(result)
+  end
+
+  specify '#with' do
+    r = subject.with { |q| q.foo.baz }
+    expect(r).to eq(result)
+  end
+
+  specify '#execute' do
+    expect(subject.execute(:sequence)).to eq(result)
   end
 end

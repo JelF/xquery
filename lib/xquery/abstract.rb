@@ -4,21 +4,17 @@ require 'xquery/query_proxy'
 require 'xquery/errors'
 
 module XQuery
-  # abstract superclass, should be inherited, not used
+  # Abstract superclass, should be inherited, not used
   class Abstract
     class_attribute :query_superclass
 
-    # yields instance inside block. I suggest to name it `q`
+    # Yields instance inside block. I suggest to name it `q`
     # @param args [Array(Object)] array of arguments would be passed to
     # @param block [#to_proc] block to witch instance would be yielded
     def self.with(*args, &block)
       instance = new(*args)
       block.call(instance)
       instance.query
-    end
-
-    class << self
-      alias_method :execute, :with
     end
 
     # Defines `method`, `__method` and `q.method`.
@@ -30,13 +26,13 @@ module XQuery
       alias_on_q(as, true)
     end
 
-    # same as wrap_method, but hanldes multiply methods
+    # Aame as wrap_method, but hanldes multiply methods
     # @param methods [Array(#to_sym)] names of methods defined
     def self.wrap_methods(*methods)
       methods.each(&method(:wrap_method))
     end
 
-    # Aliases method to __method and q.method
+    # Aliases method to `#__method` and `q.method`
     # @param name [#to_sym] name of method
     # @param return_self [Boolean] should defined method return self or result
     def self.alias_on_q(name, return_self = false)
@@ -68,7 +64,27 @@ module XQuery
       @query_proxy = self.class.query_proxy.new(self)
     end
 
-    # yields query inside block
+    # Yields iteself inside block. I suggest to name it `q`
+    # @param block [#to_proc] block to whitch instance would be yielded
+    # @return [Object] query
+    def with(&block)
+      block.call(self)
+      query
+    end
+
+    # Executes specified method, returns query.
+    # Feel free to redefine this method in case it's only public api method
+    # in your class
+    # @param method [#to_sym] any instance public method name
+    # @param args [Array(Object)] method call params
+    # @param block [#to_proc] block would be sent to method
+    # @return [Object] query
+    def execute(method, *args, &block)
+      public_send(method, *args, &block)
+      query
+    end
+
+    # Yields query inside block
     # @param block [#to_proc]
     # @return [XQuery::Abstract] self
     def apply(&block)
@@ -78,14 +94,14 @@ module XQuery
 
     private
 
-    # @private_api
-    # updates query by calling method on it and storing the result
+    # Private Api!
+    # Updates query by calling method on it and storing the result
     # @return [XQuery::Abstract] self
     def _update_query(method, *args, &block)
       apply { |x| x.public_send(method, *args, &block) }
     end
 
-    # added constraints check
+    # Added constraints check
     # @raise XQuery::QuerySuperclassChanged
     def query=(x)
       unless x.is_a?(query_superclass)
