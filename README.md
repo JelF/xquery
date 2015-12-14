@@ -1,7 +1,10 @@
 # XQuery
 
 [![Join the chat at https://gitter.im/JelF/xquery](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JelF/xquery?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/JelF/xquery.svg?branch=master)](https://travis-ci.org/JelF/xquery)  
+[![Build Status](https://travis-ci.org/JelF/xquery.svg?branch=master)](https://travis-ci.org/JelF/xquery)
+[![Code Climate](https://codeclimate.com/github/JelF/xquery/badges/gpa.svg)](https://codeclimate.com/github/JelF/xquery)
+[![Test Coverage](https://codeclimate.com/github/JelF/xquery/badges/coverage.svg)](https://codeclimate.com/github/JelF/xquery/coverage)
+[![Issue Count](https://codeclimate.com/github/JelF/xquery/badges/issue_count.svg)](https://codeclimate.com/github/JelF/xquery)  
 XQuery is designed to replace boring method call chains and allow to easier
 convert it in a builder classes
 ## Usage of `XQuery` function
