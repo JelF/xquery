@@ -11,13 +11,7 @@ Gem::Specification.new do |spec|
     see README.md for more information
   TXT
 
-  if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
-<<<<<<< HEAD
-    spec.platform = Gem::Platform::JAVA
-=======
-    spec.platform = 'java'
->>>>>>> master
-  end
+  spec.platform = 'java' if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
 
   spec.homepage = 'https://github.com/JelF/xquery'
   spec.license = 'WTFPL'
