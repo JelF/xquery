@@ -1,4 +1,6 @@
 # XQuery
+
+[![Join the chat at https://gitter.im/JelF/xquery](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JelF/xquery?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 XQuery is designed to replace boring method call chains and allow to easier
 convert it in a builder classes
 [![Build Status](https://travis-ci.org/JelF/xquery.svg?branch=master)](https://travis-ci.org/JelF/xquery)
