@@ -45,7 +45,7 @@ end
 
 namespace :doc do
   desc 'open doc'
-  task open: :yard do
+  task open: :doc do
     require 'uri'
     uri = URI.join('file:///', ROOT.join('doc/frames.html').to_s)
     exec 'xdg-open', uri.to_s
