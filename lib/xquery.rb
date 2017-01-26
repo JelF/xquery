@@ -4,6 +4,11 @@ require 'active_support'
 # convert it in a builder classes
 # see [README.md] for more information
 module XQuery
+  autoload :Abstract, 'xquery/abstract'
+  autoload :QuerySuperclassChanged, 'xquery/errors'
+  autoload :Generic, 'xquery/generic'
+  autoload :QueryProxy, 'xquery/query_proxy'
+  autoload :VERSION, 'xquery/version'
 end
 
 # Allows you to do all query magic on a generic object

@@ -5,8 +5,13 @@ require 'xquery/errors'
 
 module XQuery
   # Abstract superclass, should be inherited, not used
+  # @attr query
+  #   contains current state of wrapped query
   class Abstract
     class_attribute :query_superclass
+    self.query_superclass = Object
+
+    attr_reader :query
 
     # Yields instance inside block. I suggest to name it `q`
     # @param args [Array(Object)]
@@ -18,9 +23,9 @@ module XQuery
     end
 
     # Defines `method`, `__method` and `q.method`.
-    # Both of wich changes query to query.method
+    # Both of witch changes query to query.method
     # @param name [#to_sym] name of method on query
-    # @param as [#to_sym] name of method defined
+    # @option as [#to_sym] name of method defined
     def self.wrap_method(name, as: name)
       define_method(as) { |*args, &block| _update_query(name, *args, &block) }
       alias_on_q(as, true)
@@ -51,12 +56,11 @@ module XQuery
     end
 
     # inherited classes should also have their query_proxies inherited
+    # @api private
+    # @param child [Class] class inheriting this
     def self.inherited(child)
       child.instance_variable_set(:@query_proxy, Class.new(query_proxy))
     end
-
-    # contains current state of wrapped query
-    attr_reader :query
 
     # @param query [Object] generic query
     def initialize(query)
@@ -65,7 +69,7 @@ module XQuery
     end
 
     # Yields iteself inside block. I suggest to name it `q`
-    # @param block [#to_proc] block to whitch instance would be yielded
+    # @yield [XQuery::Abstract] itself
     # @return [Object] query
     def with
       yield(self)
@@ -85,7 +89,7 @@ module XQuery
     end
 
     # Yields query inside block
-    # @param block [#to_proc]
+    # @yield query
     # @return [XQuery::Abstract] self
     def apply
       self.query = yield(query)
@@ -94,8 +98,8 @@ module XQuery
 
     private
 
-    # Private Api!
     # Updates query by calling method on it and storing the result
+    # @api private
     # @return [XQuery::Abstract] self
     def _update_query(method, *args, &block)
       apply { |x| x.public_send(method, *args, &block) }
