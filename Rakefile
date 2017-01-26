@@ -41,7 +41,7 @@ namespace :doc do
     puts 'No documentation found for:'
     objs.each { |x| puts "\t#{x}" }
 
-    fail '100% document coverage required'
+    raise '100% document coverage required'
   end
 end
 
