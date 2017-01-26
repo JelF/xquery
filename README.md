@@ -8,7 +8,7 @@
 XQuery is designed to replace boring method call chains and allow to easier
 convert it in a builder classes
 ## Usage of `XQuery` function
-`Xquery` is a shortcat to `Xquery::Generic.with`
+`XQuery` is a shortcat to `XQuery::Generic.with`
 
 ```
 r = XQuery(''.html_safe) do |q|
@@ -85,5 +85,7 @@ You can get XQuery functionality even you have not defined a specific class
 You can see it in this document when i described `XQuery` function.
 Note, that it yields a class instance, not `q` object.
 It accepts any arguments, they will be passed to a constructor (except block)
-If you want only to call one function on an instance (e.g. `#apply`),
-you should prefer `execute` alias
+
+### `execute` method
+Preferred way to call public instance methods.
+Resulting query would be returned
