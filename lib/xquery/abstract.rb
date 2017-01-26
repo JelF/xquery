@@ -9,12 +9,12 @@ module XQuery
     class_attribute :query_superclass
 
     # Yields instance inside block. I suggest to name it `q`
-    # @param args [Array(Object)] array of arguments would be passed to
-    # @param block [#to_proc] block to witch instance would be yielded
-    def self.with(*args, &block)
-      instance = new(*args)
-      block.call(instance)
-      instance.query
+    # @param args [Array(Object)]
+    #   array of arguments would be passed to `new`
+    # @yield [XQuery::Abstract] new intance
+    # @return resulting query
+    def self.with(*args)
+      new(*args).with { |instance| yield(instance) }
     end
 
     # Defines `method`, `__method` and `q.method`.
@@ -67,8 +67,8 @@ module XQuery
     # Yields iteself inside block. I suggest to name it `q`
     # @param block [#to_proc] block to whitch instance would be yielded
     # @return [Object] query
-    def with(&block)
-      block.call(self)
+    def with
+      yield(self)
       query
     end
 
@@ -87,8 +87,8 @@ module XQuery
     # Yields query inside block
     # @param block [#to_proc]
     # @return [XQuery::Abstract] self
-    def apply(&block)
-      self.query = block.call(query)
+    def apply
+      self.query = yield(query)
       self
     end
 
@@ -105,7 +105,7 @@ module XQuery
     # @raise XQuery::QuerySuperclassChanged
     def query=(x)
       unless x.is_a?(query_superclass)
-        fail QuerySuperclassChanged.new(x, query_superclass)
+        raise QuerySuperclassChanged.new(x, query_superclass)
       end
 
       @query = x

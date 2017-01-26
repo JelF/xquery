@@ -6,5 +6,9 @@ require 'active_support'
 module XQuery
 end
 
-require 'xquery/version'
-require 'xquery/generic'
+# Allows you to do all query magic on a generic object
+# @param model [Object] any object
+# @yield block where instance will be yielded
+def XQuery(model)
+  XQuery::Generic.with(model) { |instance| yield(instance) }
+end

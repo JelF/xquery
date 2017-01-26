@@ -4,6 +4,10 @@ Style/Documentation:
     - spec/**/*.rb
 
 Style/MethodName:
-   Exclude:
-     # XQuery method should be CamelCase
-     - lib/xquery/generic.rb
+  Exclude:
+    # XQuery method should be CamelCase
+    - lib/xquery.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb

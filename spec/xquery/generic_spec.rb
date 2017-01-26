@@ -4,7 +4,7 @@ describe XQuery::Generic do
   specify 'it works good!' do
     r = XQuery('9 bottle of juice, please') do |q|
       q.sub('juice', 'beer')
-      q[(/\d+/)]
+      q[/\d+/]
       q.to_i
       q / 3
     end
