@@ -24,12 +24,12 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activesupport', '~> 4.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.10'
-  spec.add_development_dependency 'rspec', '~> 3.3'
-  spec.add_development_dependency 'pry', '~> 0.10'
-  spec.add_development_dependency 'rake', '~> 10.4'
+  spec.add_development_dependency 'bundler', '~> 1.12'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.35'
-  spec.add_development_dependency 'yard', '~> 0.8'
-  spec.add_development_dependency 'simplecov', '~> 0.11'
-  spec.add_development_dependency 'codeclimate-test-reporter'
+  spec.add_development_dependency 'pry', '~> 0.10'
+  spec.add_development_dependency 'coveralls', '~> 0.8'
+  spec.add_development_dependency 'yard', '~> 0.9'
+  spec.add_development_dependency 'launchy', '~> 2.4.3'
 end
